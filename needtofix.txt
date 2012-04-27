@@ -1,0 +1,63 @@
+All: UserForm3.BackupLabel = "Date of last backup: " & Sheets("Brain").Cells(5, 7).Value
+BackupLabel added under save button
+Save diary after saving backup/remote
+Sub SaveRemotely()
+    On Error GoTo oops
+    UserForm3.CommandButton2.Caption = "Please wait while it saves backups..."
+    UserForm3.CommandButton2.BackColor = 255
+    UserForm3.Repaint
+    Application.DisplayAlerts = False
+    Dim iSuccess As Integer
+    ZipFileNow
+    UserForm3.BackupLabel = "Date of last backup: " & Sheets("Brain").Cells(5, 7).Value
+    Sheets("Brain").Cells(5, 7).Value = Date
+    Application.DisplayAlerts = True
+    UserForm3.CommandButton2.Caption = "Save a Backup copy remotely & locally"
+    UserForm3.CommandButton2.BackColor = 4966415
+    UserForm3.Repaint
+    Application.ActiveWorkbook.Save
+    Exit Sub
+oops:
+    ErrorRemote
+End Sub
+
+
+Add to ZipFile module after Crap: jump
+If iFnSuccess <> 3 Then MsgBox "Something went wrong during the save... Please MANUALLY backup your diary.", vbCritical
+
++++ After midnight?
+In sheet 1:
+Private Sub Worksheet_Activate()
+    AfterMidnight
+End Sub
+ 
+AfterMidnightMod
+
+Sub AfterMidnight()
+    Dim Unit1 As Integer
+    Dim Unit2 As Integer
+    Dim Unit3 As Integer
+    Dim Cellcount As Integer
+    Dim Beginning As Integer
+    
+    Sheets("Diary").Activate
+    Sheet1.Unprotect "3.1415927"
+    Cellcount = Application.WorksheetFunction.CountA(Range("A:A")) + 9
+    Beginning = 12
+    Unit1 = 0
+    Unit2 = 0
+    Unit3 = 0
+    
+    For I = Beginning To Cellcount
+        With Sheets("Diary")
+            If ((.Cells(I, 12) < 7) And (.Cells(I, 2) = 1)) Then Unit1 = Unit1 + 1
+            If ((.Cells(I, 12) < 7) And (.Cells(I, 2) = 2)) Then Unit2 = Unit2 + 1
+            If ((.Cells(I, 12) < 7) And (.Cells(I, 2) = 3)) Then Unit3 = Unit3 + 1
+        End With
+    Next I
+    
+    Sheets("Diary").Cells(2, 47) = Unit1
+    Sheets("Diary").Cells(2, 48) = Unit2
+    Sheets("Diary").Cells(2, 49) = Unit3
+    Sheet1.Protect "3.1415927"
+End Sub

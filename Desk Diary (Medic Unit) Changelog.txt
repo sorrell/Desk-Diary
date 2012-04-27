@@ -1,0 +1,8 @@
++ Fixed chronologically sorting bug related to OK button not populating next line
++ Fixed tab order in Enter Run screen
++ Switched Hospital/Inc# in Printable Form
++ Made unit-run-total field sizes shrink-to-fit
++ Fixed backup date bug
++ Added backup label under save button
++ Added better remote save error handling message 
++ Removed 'Medic ' from startup dialog since companies wouldn't fill in the number afterwards
